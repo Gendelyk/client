@@ -6,20 +6,27 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "generate-types": "cross-var openapi-typescript $npm_config_url --output ./src/modules/core/types/api-types.ts"
   },
   "dependencies": {
+    "@tanstack/query-sync-storage-persister": "^5.59.16",
+    "@tanstack/react-query": "^5.59.16",
+    "@tanstack/react-query-persist-client": "^5.59.16",
     "jsonwebtoken": "^9.0.2",
     "next": "14.2.15",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "yup": "^1.4.0"
   },
   "devDependencies": {
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "cross-var": "^1.1.0",
     "eslint": "^8",
     "eslint-config-next": "14.2.15",
+    "openapi-typescript": "^7.4.2",
     "typescript": "^5"
   }
 }

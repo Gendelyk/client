@@ -18,6 +18,9 @@
       }
     ],
     "paths": {
+      "@modules/*": ["./src/modules/*"],
+      "@config/*": ["./src/config/*"],
+      "@core/*": ["./src/modules/core/*"],
       "@/*": ["./src/*"]
     }
   },

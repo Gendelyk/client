@@ -1,36 +1,36 @@
-'use client';
+"use client";
 
-import { useRouter } from 'next/navigation';
-import React from 'react'
-import { useState } from 'react'
+import { useRouter } from "next/navigation";
+import React from "react";
+import { useState } from "react";
 
 export const RegistrationForm = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
   const router = useRouter();
 
-  const handleSubmit = async(e) => {
-    e.preventDefault()
-    // router.push('/');  
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    // router.push('/');
 
-    const res = await fetch('api/auth/registration', {
-      method: 'POST',
+    const res = await fetch("api/auth/registration", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify({ email, password })
-    }); 
+      body: JSON.stringify({ email, password }),
+    });
 
     const data = await res.json();
 
     if (res.ok) {
-      localStorage.setItem('token', data.token);
-      router.push('/');      
+      localStorage.setItem("token", data.token);
+      router.push("/");
     } else {
       setError(data.message);
-    }    
-  }
+    }
+  };
   return (
     <form onSubmit={handleSubmit}>
       <div>
@@ -51,8 +51,8 @@ export const RegistrationForm = () => {
           required
         />
       </div>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+      {error && <p style={{ color: "red" }}>{error}</p>}
       <button type="submit">Enter</button>
     </form>
-  )
-}
+  );
+};
