@@ -1,35 +1,35 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import React from "react";
+import React, { FormEvent, FormEventHandler } from "react";
 import { useState } from "react";
+import { useRegister } from "../hooks";
+import { hasErrors } from "@modules/core/utils";
 
 export const RegistrationForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [error, setError] = useState(null);
   const router = useRouter();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    // router.push('/');
+  const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
+    try {
+      event.preventDefault();    
 
-    const res = await fetch("api/auth/registration", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email, password }),
-    });
+      const { register } = useRegister();
 
-    const data = await res.json();
+      const response = await register({ data: { email, password, firstName, lastName } })
 
-    if (res.ok) {
-      localStorage.setItem("token", data.token);
-      router.push("/");
-    } else {
-      setError(data.message);
-    }
+      if (response !== undefined && hasErrors(response)) {
+        return;
+      }
+
+      router.push("/profile") 
+    } catch (error) {
+      console.log(error);
+    }    
   };
   return (
     <form onSubmit={handleSubmit}>

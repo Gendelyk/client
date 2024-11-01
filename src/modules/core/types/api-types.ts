@@ -123,7 +123,7 @@ export interface components {
             errors: Record<string, never>;
         };
         RegisterUserInput: {
-            id: number;
+            id?: number;
             email: string;
             /** @description Should contain at least one special character, one uppercase letter, one lowercase letter, and one number and minimum length 6 */
             password: string;
