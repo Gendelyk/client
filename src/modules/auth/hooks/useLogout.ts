@@ -2,8 +2,8 @@ import { queryClient } from '@core/queryClient';
 import { useMutation } from '@tanstack/react-query';
 import { useCallback } from 'react';
 
-import { useRouter } from 'next/router';
 import { logout } from '../api';
+import { useRouter } from 'next/navigation';
 
 export type UseLogoutReturnType = {
   isLoading: boolean;
