@@ -10,19 +10,7 @@ export const LogoutButton = () => {
 
   const { logout } = useLogout();
 
-  const handleLogout: MouseEventHandler<HTMLButtonElement> = async () => {
-    try {
-      const response = await logout();
-
-      if (hasErrors(response!)) {
-        return;
-      }
-
-      router.push("/home");
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  const handleLogout: MouseEventHandler<HTMLButtonElement> = logout;
 
   return (
     <button onClick={handleLogout}>Logout</button>
