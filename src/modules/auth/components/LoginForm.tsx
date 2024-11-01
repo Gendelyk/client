@@ -20,7 +20,7 @@ export const LoginForm = () => {
 
       const response = await login({ data: { email, password } });
 
-      if (hasErrors(response!)) {
+      if (response !== undefined && hasErrors(response)) {
         return;
       }
 
