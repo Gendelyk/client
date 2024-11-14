@@ -100,6 +100,134 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/posts": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["PostController_getPosts"];
+        put?: never;
+        post: operations["PostController_createPost"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/posts/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["PostController_getPost"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch: operations["PostController_updatePost"];
+        trace?: never;
+    };
+    "/comments/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch: operations["CommentController_updatePost"];
+        trace?: never;
+    };
+    "/comments": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["CommentController_createPost"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/ratings/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["RatingController_getMyRating"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/ratings": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["RatingController_toggleRating"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/categories": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["CategoryController_getCategories"];
+        put?: never;
+        post: operations["CategoryController_createPost"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/categories/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["CategoryController_getCategory"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch: operations["CategoryController_updatePost"];
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -123,7 +251,6 @@ export interface components {
             errors: Record<string, never>;
         };
         RegisterUserInput: {
-            id?: number;
             email: string;
             /** @description Should contain at least one special character, one uppercase letter, one lowercase letter, and one number and minimum length 6 */
             password: string;
@@ -143,7 +270,7 @@ export interface components {
             firstName: string;
             lastName: string;
             /** @enum {string} */
-            role: UserDtoRole;
+            role: "admin" | "user";
         };
         EditUserInput: {
             id?: number;
@@ -161,7 +288,7 @@ export interface components {
             firstName: string;
             lastName: string;
             /** @enum {string} */
-            role: CreateUserInputRole;
+            role: "admin" | "user";
         };
         CreateUserOutput: {
             id: number;
@@ -169,7 +296,90 @@ export interface components {
             firstName: string;
             lastName: string;
             /** @enum {string} */
-            role: CreateUserOutputRole;
+            role: "admin" | "user";
+        };
+        PostDto: {
+            id: number;
+            author: components["schemas"]["UserDto"];
+            title: string;
+            body: string;
+            categoryId: number;
+            /** @enum {string} */
+            status: "active" | "archived" | "deleted";
+        };
+        CommentDto: {
+            id: number;
+            /** Format: date-time */
+            createdAt: string;
+            /** Format: date-time */
+            updatedAt: string;
+            author: components["schemas"]["UserDto"];
+            body: string;
+            /** @enum {string} */
+            status: "active" | "archived" | "deleted";
+        };
+        PostWithCommentsAndRatingDto: {
+            id: number;
+            author: components["schemas"]["UserDto"];
+            title: string;
+            body: string;
+            categoryId: number;
+            /** @enum {string} */
+            status: "active" | "archived" | "deleted";
+            comments: components["schemas"]["CommentDto"];
+            upvoteCount: number;
+            downvoteCount: number;
+        };
+        EditPostInput: {
+            title?: string;
+            body?: string;
+            /** @enum {string} */
+            status?: "active" | "archived" | "deleted";
+        };
+        CreatePostInput: {
+            title: string;
+            body: string;
+            categoryId: number;
+        };
+        EditCommentInput: {
+            body: string;
+            /** @enum {string} */
+            status: "active" | "archived" | "deleted";
+        };
+        CreateCommentInput: {
+            body: string;
+            postId: number;
+        };
+        CreatedCommentDto: {
+            id: number;
+            body: string;
+            /** @enum {string} */
+            status: "active" | "archived" | "deleted";
+        };
+        RatingDto: {
+            id: number;
+            postId: number;
+            /** @enum {string} */
+            rating: "upvote" | "downvote";
+        };
+        CreateRatingInput: {
+            postId: number;
+            /** @enum {string} */
+            rating: "upvote" | "downvote";
+        };
+        CategoryDto: {
+            id: number;
+            title: string;
+            /** @enum {string} */
+            status: "active" | "archived";
+        };
+        EditCategoryInput: {
+            title?: string;
+            /** @enum {string} */
+            status?: "active" | "archived";
+        };
+        CreateCategoryInput: {
+            title: string;
         };
     };
     responses: never;
@@ -379,16 +589,392 @@ export interface operations {
             };
         };
     };
-}
-export enum UserDtoRole {
-    admin = "admin",
-    user = "user"
-}
-export enum CreateUserInputRole {
-    admin = "admin",
-    user = "user"
-}
-export enum CreateUserOutputRole {
-    admin = "admin",
-    user = "user"
+    PostController_getPosts: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Returns all posts */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PostDto"][];
+                };
+            };
+            /** @description Error message */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOutput"];
+                };
+            };
+        };
+    };
+    PostController_createPost: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreatePostInput"];
+            };
+        };
+        responses: {
+            /** @description Create a post */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PostDto"];
+                };
+            };
+            /** @description Error message */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOutput"];
+                };
+            };
+        };
+    };
+    PostController_getPost: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Returns post with specified id and comments and rating */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PostWithCommentsAndRatingDto"];
+                };
+            };
+            /** @description Error message */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOutput"];
+                };
+            };
+        };
+    };
+    PostController_updatePost: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["EditPostInput"];
+            };
+        };
+        responses: {
+            /** @description Updates post */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PostDto"];
+                };
+            };
+            /** @description Error message */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOutput"];
+                };
+            };
+        };
+    };
+    CommentController_updatePost: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["EditCommentInput"];
+            };
+        };
+        responses: {
+            /** @description Updates comment */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CommentDto"];
+                };
+            };
+            /** @description Error message */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOutput"];
+                };
+            };
+        };
+    };
+    CommentController_createPost: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateCommentInput"];
+            };
+        };
+        responses: {
+            /** @description Create a comment */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CreatedCommentDto"];
+                };
+            };
+            /** @description Error message */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOutput"];
+                };
+            };
+        };
+    };
+    RatingController_getMyRating: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Get my rating for current post */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RatingDto"];
+                };
+            };
+            /** @description Error message */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOutput"];
+                };
+            };
+        };
+    };
+    RatingController_toggleRating: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateRatingInput"];
+            };
+        };
+        responses: {
+            /** @description Create a rating. If rating existed before with the same value - just removes the rating. Otherwise sets rating to new value */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RatingDto"];
+                };
+            };
+            /** @description Error message */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOutput"];
+                };
+            };
+        };
+    };
+    CategoryController_getCategories: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Returns all categories */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CategoryDto"][];
+                };
+            };
+            /** @description Error message */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOutput"];
+                };
+            };
+        };
+    };
+    CategoryController_createPost: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateCategoryInput"];
+            };
+        };
+        responses: {
+            /** @description Create a post */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CategoryDto"];
+                };
+            };
+            /** @description Error message */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOutput"];
+                };
+            };
+        };
+    };
+    CategoryController_getCategory: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Returns category with specified id */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CategoryDto"];
+                };
+            };
+            /** @description Error message */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOutput"];
+                };
+            };
+        };
+    };
+    CategoryController_updatePost: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["EditCategoryInput"];
+            };
+        };
+        responses: {
+            /** @description Updates category */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CategoryDto"];
+                };
+            };
+            /** @description Error message */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOutput"];
+                };
+            };
+        };
+    };
 }
