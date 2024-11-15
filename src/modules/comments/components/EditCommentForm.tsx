@@ -14,7 +14,7 @@ export const EditCommentForm = () => {
     try {
       event.preventDefault();
 
-      const response = await updateComment({ data: { body: comment, status: 'active' } });
+      const response = await updateComment({ data: { body: comment, status: 'active' }, path: { id: 0 } });
 
       if (response !== undefined && hasErrors(response)) {
         return;
