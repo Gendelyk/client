@@ -13,7 +13,7 @@ export const DeleteCommentButton = ({ comment }: { comment: string }) => {
     try {
       event.preventDefault();
 
-      const response = await updateComment({ data: { body: comment, status: 'deleted' } });
+      const response = await updateComment({ data: { body: comment, status: 'deleted' }, path: { id: 0 }});
 
       if (response !== undefined && hasErrors(response)) {
         return;
