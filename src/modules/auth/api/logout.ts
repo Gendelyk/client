@@ -5,7 +5,4 @@ export const logout = requestBuilder({
   method: 'post',
 });
 
-
-export type LoginParams = Parameters<typeof logout>[0]
-
-export type LoginReturnType = ReturnType<typeof logout>
+export type LogoutReturnType = ReturnType<typeof logout>

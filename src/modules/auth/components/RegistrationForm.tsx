@@ -51,6 +51,24 @@ export const RegistrationForm = () => {
           required
         />
       </div>
+      <div>
+        <label>First Name:</label>
+        <input
+          type="text"
+          value={firstName}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+        />
+      </div>
+      <div>
+        <label>Last Name:</label>
+        <input
+          type="text"
+          value={lastName}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+        />
+      </div>
       {error && <p style={{ color: "red" }}>{error}</p>}
       <button type="submit">Enter</button>
     </form>
