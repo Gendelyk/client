@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 import { useUpdateComment } from '../hooks';
 
 export const DeleteCommentButton = ({ comment }: { comment: string }) => {  
-  const { createComment: updateComment } = useUpdateComment();
+  const { updateComment } = useUpdateComment();
 
   const handleClick: MouseEventHandler<HTMLButtonElement> = async (event) => {
     try {

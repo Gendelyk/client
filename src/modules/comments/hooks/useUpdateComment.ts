@@ -10,7 +10,7 @@ type UpdateComment = (
 
 type UseUpdateCommentReturnType = {
   isLoading: boolean,
-  createComment: UpdateComment
+  updateComment: UpdateComment
 };
 
 export const useUpdateComment = (): UseUpdateCommentReturnType => {
@@ -28,6 +28,6 @@ export const useUpdateComment = (): UseUpdateCommentReturnType => {
 
   return {
     isLoading: isPending,
-    createComment: handleUpdateComment
+    updateComment: handleUpdateComment
   }
 }

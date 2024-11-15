@@ -8,7 +8,7 @@ import { useUpdateComment } from '../hooks';
 
 export const EditCommentForm = () => {
   const [comment, setComment] = useState('');
-  const { createComment: updateComment } = useUpdateComment();
+  const { updateComment } = useUpdateComment();
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
     try {
