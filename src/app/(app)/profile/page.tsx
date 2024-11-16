@@ -1,1 +1,3 @@
-export { ProfileScreen as default } from "@modules/user/screens/Profile";
+import { ProfileScreen } from "@modules/user/screens";
+
+export default ProfileScreen;
