@@ -13,12 +13,11 @@ export const RegistrationForm = () => {
   const [lastName, setLastName] = useState("");
   const [error, setError] = useState(null);
   const router = useRouter();
+  const { register } = useRegister();
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
     try {
-      event.preventDefault();    
-
-      const { register } = useRegister();
+      event.preventDefault();          
 
       const response = await register({ data: { email, password, firstName, lastName } })
 
@@ -56,7 +55,7 @@ export const RegistrationForm = () => {
         <input
           type="text"
           value={firstName}
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={(e) => setFirstName(e.target.value)}
           required
         />
       </div>
@@ -65,7 +64,7 @@ export const RegistrationForm = () => {
         <input
           type="text"
           value={lastName}
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={(e) => setLastName(e.target.value)}
           required
         />
       </div>

@@ -1,1 +1,2 @@
-export * from './getMe'
+export * from './getMe';
+export * from './updateUser';
