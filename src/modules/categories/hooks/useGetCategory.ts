@@ -2,8 +2,7 @@
 
 import { GetCategoryParams, GetCategoryReturnType, getCategory } from "../api"
 import { useQuery } from "@tanstack/react-query";
-
-type Category = Extract<GetCategoryReturnType['data'], { id: number }>;
+import { Category } from "../types";
 
 type UseGetCategoryReturnType = {
   isLoading: boolean,
@@ -17,7 +16,7 @@ export const useGetCategory = (id: number): UseGetCategoryReturnType => {
     }
   };
   const { data, isLoading } = useQuery({
-    queryKey: ['currentCategory'],
+    queryKey: [`category${id}`],
     queryFn: () => getCategory(params)
   });
 

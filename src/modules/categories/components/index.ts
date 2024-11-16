@@ -1,3 +1,3 @@
 export * from './CreateCategoryForm';
-export * from './DeleteCategory';
+export * from './DeleteCategoryButton';
 export * from './EditCategoryForm';

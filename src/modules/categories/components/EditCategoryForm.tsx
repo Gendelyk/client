@@ -1,13 +1,14 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import React, { FormEventHandler } from "react";
+import React, { FC, FormEventHandler } from "react";
 import { useState } from "react";
 import { hasErrors } from "@modules/core/utils";
 import { useCreateCategory, useUpdateCategory } from "../hooks";
+import { Category } from "../types";
 
-export const EditCategoryForm = () => {
-  const [title, setTitle] = useState("");  
+export const EditCategoryForm: FC<{ category: Category }> = ({ category }) => {
+  const [title, setTitle] = useState(category.title);  
   const router = useRouter();
 
   const { updateCategory } = useUpdateCategory();
@@ -16,11 +17,13 @@ export const EditCategoryForm = () => {
     try {
       event.preventDefault();
       
-      const response = await updateCategory({ data: { title, status: 'active' }, path: { id: 0 } });
+      const response = await updateCategory({ data: { title, status: 'active' }, path: { id: category.id } });
 
       if (response !== undefined && hasErrors(response)) {
         return;
       }      
+
+      router.replace(`/categories/${category.id}`);
     } catch (error) {
       console.error(error);
     }

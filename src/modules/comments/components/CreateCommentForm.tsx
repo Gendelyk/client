@@ -1,11 +1,11 @@
 "use client";
 
-import React, { FormEventHandler, useState } from 'react'
+import React, { FC, FormEventHandler, useState } from 'react'
 import { useCreateComment } from '../hooks';
 import { hasErrors } from '@modules/core/utils';
 import { useRouter } from 'next/navigation';
 
-export const CreateCommentForm = () => {
+export const CreateCommentForm: FC<{ postId: number }> = ({ postId }) => {
   const [comment, setComment] = useState('');
   const { createComment } = useCreateComment();
 
@@ -13,7 +13,7 @@ export const CreateCommentForm = () => {
     try {
       event.preventDefault();
 
-      const response = await createComment({ data: { body: comment, postId: 0 } });
+      const response = await createComment({ data: { body: comment, postId } });
 
       if (response !== undefined && hasErrors(response)) {
         return;

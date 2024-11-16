@@ -21,7 +21,7 @@ export const useLogout = (): UseLogoutReturnType => {
     await mutateAsync({});
     queryClient.setQueryData(['currentUser'], null);
     queryClient.clear();
-    router.replace('/auth/login');
+    router.replace('/login');
   }, [mutateAsync, router]);
 
   return {

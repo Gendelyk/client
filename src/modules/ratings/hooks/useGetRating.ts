@@ -10,10 +10,10 @@ type UseGetRatingReturnType = {
   ratings: Rating | null
 }
 
-export const useGetRating = (id: number): UseGetRatingReturnType => {
+export const useGetRating = (postId: number): UseGetRatingReturnType => {
   const params: GetRatingParams = {
     path: {
-      id
+      id: postId
     }
   };
   const { data, isLoading } = useQuery({

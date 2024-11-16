@@ -1,19 +1,22 @@
 'use client'
 
-import React, { FC } from 'react'
+import React, { FC, useEffect } from 'react'
 import { useGetCategory } from '../hooks'
-import { notFound } from 'next/navigation'
+import { notFound, useRouter } from 'next/navigation'
+import { DeleteCategoryButton } from '../components'
+import { CategoryProps } from '../types'
+import { queryClient } from '@modules/core/queryClient'
+import { QueryFilters } from '@tanstack/react-query'
 
-type Props = {
-  params: {
-    categoryId: number
-  }  
-}
 
-export const Category: FC<Props> = ({ params }) => {
-  const { category, isLoading } = useGetCategory(params.categoryId);  
 
-  return category ? (
-    <div>{category.title}</div>
+export const Category: FC<CategoryProps> = ({ params }) => {  
+  const { category, isLoading } = useGetCategory(params.categoryId);    
+
+  return category !== null ? (
+    <>
+      <div>{category.title}</div>
+      <DeleteCategoryButton category={category}/>
+    </>
   ) : <div>Loading...</div>;
 }
