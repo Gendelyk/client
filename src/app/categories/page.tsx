@@ -1,7 +1,3 @@
-import React from 'react'
+import { Categories } from "@modules/categories/screens/Categories";
 
-export default function page() {
-  return (
-    <div>Categories</div>
-  )
-}
+export default Categories;
