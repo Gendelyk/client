@@ -9,12 +9,12 @@ import Link from "next/link";
 export const ProfileScreen: FC = () => {  
   const { user } = useCurrentUser();
 
-  return user?.id && (
+  return user !== null ? (
   <>
     <div>Hello, {user.firstName} {user.lastName}</div>
     <Link href={'/profile/change-name'}>Change name</Link>
     <Link href={'/profile/change-password'}>Change password</Link>
     <LogoutButton />
-  </>
-  );
+  </> 
+  ) : <div>Loading...</div>;
 };

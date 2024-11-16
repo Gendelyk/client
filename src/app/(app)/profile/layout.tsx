@@ -1,21 +1,25 @@
 'use client';
 
+import { useCurrentUser } from '@modules/user/hooks';
 import { useRouter } from 'next/navigation';
-import React, { FC, useEffect } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 
 const ProfileLayout: FC<{ children: React.ReactNode }> = ({ children }) => {
   const router = useRouter();
-  const tokenCookie = document.cookie.split('; ').find(row => row.startsWith('accessToken='));    
+  const [isPageFound, setIsPageFound] = useState(false);
+  const { user } = useCurrentUser();
 
   useEffect(() => {            
-    if (!tokenCookie || tokenCookie.split('=')[1] === '') {
+    if (user && !user.id) {
       router.replace('/login');
+    } else if (user) {      
+      setIsPageFound(true);
     }
-  }, [router, tokenCookie]);
+  }, [router, user]);
 
 
-  return (
-    <>
+  return isPageFound && (
+    <>      
       {children}
     </>
   )
