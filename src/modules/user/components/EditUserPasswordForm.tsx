@@ -7,22 +7,22 @@ import { hasErrors } from "@modules/core/utils";
 import { useCurrentUser, useUpdateUser } from "../hooks";
 import { getMe } from "../api";
 
-export const EditUserFirstNameForm: FC = async () => {
+export const EditUserPassword: FC = () => {
   const router = useRouter();
-  
-  const { updateUser } = useUpdateUser();
-  const user = await getMe({});
-  if (user.isError) {
-    return;
-  }
   const [oldPassword, setOldPassword] = useState("");  
   const [newPassword, setNewPassword] = useState("");    
+  const { updateUser } = useUpdateUser();
+  const { user } = useCurrentUser();
+
+  if (!user?.id) {
+    return;
+  }
   
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
     try {
       event.preventDefault();
       
-      const response = await updateUser({ data: { id: user.data.id, firstName: user.data.firstName, lastName: user.data.lastName, oldPassword, newPassword } });
+      const response = await updateUser({ data: { id: user.id, firstName: user.firstName, lastName: user.lastName, oldPassword, newPassword } });
 
       if (response !== undefined && hasErrors(response)) {
         return;

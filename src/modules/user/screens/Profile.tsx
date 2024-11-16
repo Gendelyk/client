@@ -4,25 +4,16 @@ import React, { FC, useEffect } from "react";
 import { useCurrentUser } from "../hooks";
 import { LogoutButton } from "@modules/auth/components";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
-export const ProfileScreen: FC = () => {
-  const router = useRouter();    
-  const tokenCookie = document.cookie.split('; ').find(row => row.startsWith('accessToken='));    
-
-  useEffect(() => {            
-    if (!tokenCookie || tokenCookie.split('=')[1] === '') {
-      router.replace('/login');
-    }
-  }, [router, tokenCookie]);
-
+export const ProfileScreen: FC = () => {  
   const { user } = useCurrentUser();
-  if (user && !user?.email) {
-    alert(typeof user)
-  }
 
   return user?.id && (
   <>
-    <div>Hello, {user?.email}</div>
+    <div>Hello, {user.firstName} {user.lastName}</div>
+    <Link href={'/profile/change-name'}>Change name</Link>
+    <Link href={'/profile/change-password'}>Change password</Link>
     <LogoutButton />
   </>
   );
