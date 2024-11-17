@@ -3,11 +3,11 @@ import { useCallback } from 'react';
 
 import { ErrorOutput } from '@modules/core/types/error-output';
 import { hasErrors } from '@modules/core/utils';
-import { createPost, CreatePostParams } from '../api';
+import { createPost, CreatePostParams, CreatePostReturnType } from '../api';
 
 export type CreatePost = (
   params: CreatePostParams,
-) => Promise<ErrorOutput<CreatePostParams> | undefined>;
+) => Promise<CreatePostReturnType | undefined>;
 
 export type UseCreatePostReturnType = {
   isLoading: boolean;
@@ -23,11 +23,9 @@ export const useCreatePost = (): UseCreatePostReturnType => {
     async (data) => {
       try {
         const response = await mutateAsync(data);
-
-        if (hasErrors(response)) {
-          return response;
-        }        
-      } catch (error) {
+        console.log(response)
+        return response;    
+      } catch (error) {        
         console.error(error);
       }
     },

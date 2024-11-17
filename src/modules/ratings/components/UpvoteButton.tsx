@@ -6,7 +6,12 @@ import { useState } from "react";
 import { hasErrors } from "@modules/core/utils";
 import { useCreateRating } from "../hooks";
 
-export const UpvoteButton: FC<{ postId: number }> = ({ postId }) => {
+type Props = {
+  postId: number,
+  clickFunction: () => void
+}
+
+export const UpvoteButton: FC<Props> = ({ postId, clickFunction }) => {
   const { createRating } = useCreateRating();
 
   const handleClick: MouseEventHandler<HTMLButtonElement> = async (event) => {
@@ -18,6 +23,7 @@ export const UpvoteButton: FC<{ postId: number }> = ({ postId }) => {
       if (response !== undefined && hasErrors(response)) {
         return;
       }      
+      clickFunction();
     } catch (error) {
       console.error(error);
     }

@@ -7,7 +7,7 @@ type Rating = Extract<GetRatingReturnType['data'], { id: number }>;
 
 type UseGetRatingReturnType = {
   isLoading: boolean,
-  ratings: Rating | null
+  myRating: Rating | null
 }
 
 export const useGetRating = (postId: number): UseGetRatingReturnType => {
@@ -18,11 +18,12 @@ export const useGetRating = (postId: number): UseGetRatingReturnType => {
   };
   const { data, isLoading } = useQuery({
     queryKey: ['currentRating'],
-    queryFn: () => getRating(params)
+    queryFn: () => getRating(params),    
+    staleTime: 0
   });
 
   return {
     isLoading,
-    ratings: (data?.data ?? null) as Rating | null
+    myRating: (data?.data ?? null) as Rating | null
   }
 }

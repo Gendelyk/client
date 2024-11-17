@@ -1,3 +1,4 @@
 export * from './Category';
-export * from './CrateCategory';
+export * from './CreateCategory';
 export * from './EditCategory';
+export * from './Categories';

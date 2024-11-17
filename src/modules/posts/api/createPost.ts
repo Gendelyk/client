@@ -6,3 +6,5 @@ export const createPost = requestBuilder({
 });
 
 export type CreatePostParams = Parameters<typeof createPost>[0];
+
+export type CreatePostReturnType = Awaited<ReturnType<typeof createPost>>;

@@ -7,6 +7,7 @@ import { DeleteCategoryButton } from '../components'
 import { CategoryProps } from '../types'
 import { queryClient } from '@modules/core/queryClient'
 import { QueryFilters } from '@tanstack/react-query'
+import { PostList } from '@modules/posts/components/PostList'
 
 
 
@@ -17,6 +18,7 @@ export const Category: FC<CategoryProps> = ({ params }) => {
     <>
       <div>{category.title}</div>
       <DeleteCategoryButton category={category}/>
+      <PostList categoryId={category.id}/>
     </>
   ) : <div>Loading...</div>;
 }

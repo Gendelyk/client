@@ -4,30 +4,31 @@ import { useRouter } from "next/navigation";
 import React, { FC, FormEventHandler } from "react";
 import { useState } from "react";
 import { hasErrors } from "@modules/core/utils";
-import { useCreateCategory, useUpdateCategory } from "../hooks";
-import { Category } from "../types";
+import { useCreatePost, useUpdatePost } from "../hooks";
+import { Post } from "../types";
 
 type Props = {
-  category: Category
+  post: Post
 }
 
-export const EditCategoryForm: FC<Props> = ({ category }) => {
-  const [title, setTitle] = useState(category.title);  
+export const EditPostForm: FC<Props> = ({ post }) => {
+  const [title, setTitle] = useState(post.title);  
+  const [body, setBody] = useState(post.body);
   const router = useRouter();
 
-  const { updateCategory } = useUpdateCategory();
+  const { updatePost } = useUpdatePost();
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
     try {
       event.preventDefault();
       
-      const response = await updateCategory({ data: { title, status: 'active' }, path: { id: category.id } });
+      const response = await updatePost({ data: { title, body, status: 'active' }, path: { id: post.id } });
 
       if (response !== undefined && hasErrors(response)) {
         return;
       }      
 
-      router.replace(`/categories/${category.id}`);
+      router.replace(`/categories/${post.id}`);
     } catch (error) {
       console.error(error);
     }
@@ -41,6 +42,15 @@ export const EditCategoryForm: FC<Props> = ({ category }) => {
           type="text"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
+          required
+        />
+      </div>
+      <div>
+        <label>Body:</label>
+        <input
+          type="text"
+          value={body}
+          onChange={(e) => setBody(e.target.value)}
           required
         />
       </div>

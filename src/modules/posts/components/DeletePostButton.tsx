@@ -1,24 +1,24 @@
 "use client";
 
 import React, { FC, FormEventHandler, MouseEventHandler, useState } from 'react'
-import { useCreateComment } from '../hooks/useCreateComment';
+import { useCreatePost } from '../hooks/useCreatePost';
 import { hasErrors } from '@modules/core/utils';
 import { useRouter } from 'next/navigation';
-import { useUpdateComment } from '../hooks';
-import { Comment } from '../types';
+import { useUpdatePost } from '../hooks';
+import { Post } from '../types';
 
 type Props = {
-  comment: Comment
+  post: Post
 }
 
-export const DeleteCommentButton: FC<Props> = ({ comment }) => {  
-  const { updateComment } = useUpdateComment();
+export const DeletePostButton: FC<Props> = ({ post }) => {  
+  const { updatePost } = useUpdatePost();
 
   const handleClick: MouseEventHandler<HTMLButtonElement> = async (event) => {
     try {
       event.preventDefault();
 
-      const response = await updateComment({ data: { body: comment.body, status: 'deleted' }, path: { id: comment.id }});
+      const response = await updatePost({ data: { title: post.title, body: post.body, status: 'deleted' }, path: { id: post.id }});
 
       if (response !== undefined && hasErrors(response)) {
         return;

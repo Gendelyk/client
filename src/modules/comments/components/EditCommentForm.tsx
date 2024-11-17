@@ -1,20 +1,25 @@
 "use client";
 
-import React, { FormEventHandler, useState } from 'react'
+import React, { FC, FormEventHandler, useState } from 'react'
 import { useCreateComment } from '../hooks';
 import { hasErrors } from '@modules/core/utils';
 import { useRouter } from 'next/navigation';
 import { useUpdateComment } from '../hooks';
+import { Comment } from '../types';
 
-export const EditCommentForm = () => {
-  const [comment, setComment] = useState('');
+type Props = {
+  comment: Comment
+}
+
+export const EditCommentForm:FC<Props> = ({ comment }) => {
+  const [body, setBody] = useState(comment.body);
   const { updateComment } = useUpdateComment();
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
     try {
       event.preventDefault();
 
-      const response = await updateComment({ data: { body: comment, status: 'active' }, path: { id: 0 } });
+      const response = await updateComment({ data: { body, status: 'active' }, path: { id: comment.id } });
 
       if (response !== undefined && hasErrors(response)) {
         return;
@@ -30,8 +35,8 @@ export const EditCommentForm = () => {
         <label>Comment:</label>
         <input
           type="text"
-          value={comment}
-          onChange={(e) => setComment(e.target.value)}
+          value={body}
+          onChange={(e) => setBody(e.target.value)}
           required
         />
       </div>      

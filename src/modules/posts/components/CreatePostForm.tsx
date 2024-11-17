@@ -1,18 +1,25 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import React, { FormEventHandler } from "react";
+import React, { FC, FormEventHandler } from "react";
 import { useState } from "react";
 import { hasErrors } from "@modules/core/utils";
 import { useCreatePost } from "../hooks";
+import { useGetAllCategories } from "@modules/categories/hooks";
+import { SelectPostCategory } from "./SelectPostCategory";
 
-export const CreatePostForm = ({ categoryId }: { categoryId: number }) => {
+export const CreatePostForm: FC = () => {  
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
-  const [category, setCategory] = useState("");
+  const [categoryId, setCategoryId] = useState(0);
   const router = useRouter();
-
+  const { categories } = useGetAllCategories();
+  let selectCategory: React.ReactNode;
   const { createPost } = useCreatePost();
+
+  if (categories != null) {
+    selectCategory = <SelectPostCategory categories={categories} categoryId={categoryId} setCategoryId={setCategoryId}/>
+  }
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
     try {
@@ -20,16 +27,18 @@ export const CreatePostForm = ({ categoryId }: { categoryId: number }) => {
       
       const response = await createPost({ data: { title, body, categoryId } });
 
-      if (response !== undefined && hasErrors(response)) {
-        return;
-      }      
+      // if (response === undefined || response.isError) {
+      //   return;
+      // }      
+      router.replace(`/home`);
     } catch (error) {
       console.error(error);
     }
   };
 
-  return (
+  return categories !== null ? (
     <form onSubmit={handleSubmit}>
+      {selectCategory}
       <div>
         <label>Title:</label>
         <input
@@ -51,5 +60,5 @@ export const CreatePostForm = ({ categoryId }: { categoryId: number }) => {
       {/* {error && <p style={{ color: "red" }}>{error}</p>} */}
       <button type="submit">Enter</button>
     </form>
-  );
+  ) : <div>Loading...</div>;
 };

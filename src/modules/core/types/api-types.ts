@@ -326,7 +326,7 @@ export interface components {
             categoryId: number;
             /** @enum {string} */
             status: "active" | "archived" | "deleted";
-            comments: components["schemas"]["CommentDto"];
+            comments: components["schemas"]["CommentDto"][];
             upvoteCount: number;
             downvoteCount: number;
         };

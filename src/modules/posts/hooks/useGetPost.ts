@@ -2,12 +2,11 @@
 
 import { getAllPosts, GetAllPostsParams, GetAllPostsReturnType, getPost, GetPostParams, GetPostReturnType } from "../api"
 import { useQuery } from "@tanstack/react-query";
-
-type Post = Extract<GetPostReturnType['data'], { id: number }>;
+import { Post } from "../types";
 
 type UseGetPostReturnType = {
   isLoading: boolean,
-  posts: Post | null
+  post: Post | null
 }
 
 export const useGetPost = (id: number): UseGetPostReturnType => {
@@ -17,12 +16,13 @@ export const useGetPost = (id: number): UseGetPostReturnType => {
     }
   };
   const { data, isLoading } = useQuery({
-    queryKey: ['currentPost'],
-    queryFn: () => getPost(params)
+    queryKey: [`currentPost${id}`],
+    queryFn: () => getPost(params),    
+    staleTime: 0
   });
 
   return {
     isLoading,
-    posts: (data?.data ?? null) as Post | null
+    post: (data?.data ?? null) as Post | null
   }
 }
