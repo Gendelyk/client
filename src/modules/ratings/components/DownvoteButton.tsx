@@ -5,13 +5,15 @@ import React, { FC, FormEventHandler, MouseEventHandler } from "react";
 import { useState } from "react";
 import { hasErrors } from "@modules/core/utils";
 import { useCreateRating } from "../hooks";
+import { Button } from "@mui/material";
 
 type Props = {
   postId: number,
+  downvoteCount: number,
   clickFunction: () => void
 }
 
-export const DownvoteButton: FC<Props> = ({ postId, clickFunction }) => {
+export const DownvoteButton: FC<Props> = ({ postId, downvoteCount, clickFunction }) => {
   const { createRating } = useCreateRating();
 
   const handleClick: MouseEventHandler<HTMLButtonElement> = async (event) => {
@@ -30,6 +32,8 @@ export const DownvoteButton: FC<Props> = ({ postId, clickFunction }) => {
   };
 
   return (
-    <button onClick={handleClick}>Downvote</button>
+    <Button variant="contained" color="error" onClick={handleClick}>
+      Не сподобалося ({downvoteCount})
+    </Button>
   );
 };

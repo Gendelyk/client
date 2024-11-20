@@ -5,6 +5,7 @@ import { UpvoteButton } from './UpvoteButton';
 import { DownvoteButton } from './DownvoteButton';
 import { Post } from '@modules/posts/types';
 import { useGetRating } from '../hooks';
+import { Box, Button } from '@mui/material';
 
 type Props = {
   post: Post
@@ -55,10 +56,17 @@ export const RatingBar: FC<Props> = ({ post }) => {
     }
   }
 
-  return myRating !== null && (
-    <>
-      <div>+ {upvoteCount} | - {downvoteCount}</div>
-      <div><UpvoteButton postId={post.id } clickFunction={clickUpvote}/> | <DownvoteButton postId={post.id} clickFunction={clickDownvote}/></div>
-    </>
-  )
+  // return myRating !== null && (
+  //   <>
+  //     <div>+ {upvoteCount} | - {downvoteCount}</div>
+  //     <div><UpvoteButton postId={post.id } clickFunction={clickUpvote}/> | <DownvoteButton postId={post.id} clickFunction={clickDownvote}/></div>
+  //   </>
+  // )
+
+  return (
+    <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+      <UpvoteButton postId={post.id} upvoteCount={upvoteCount} clickFunction={clickUpvote}/>
+      <DownvoteButton postId={post.id} downvoteCount={downvoteCount} clickFunction={clickDownvote}/>
+    </Box>
+  );
 }

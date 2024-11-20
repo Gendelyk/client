@@ -6,8 +6,14 @@ import { useState } from "react";
 import { hasErrors } from "@modules/core/utils";
 import { useCreateCategory, useUpdateCategory } from "../hooks";
 import { Category } from "../types";
+import { Button } from "@mui/material";
 
-export const DeleteCategoryButton: FC<{ category: Category }> = ({ category }) => {  
+type Props = {
+  category: Category,
+  onClick: (categoryId: number) => void
+}
+
+export const DeleteCategoryButton: FC<Props> = ({ category, onClick }) => {  
   const router = useRouter();
 
   const { updateCategory } = useUpdateCategory();
@@ -21,13 +27,15 @@ export const DeleteCategoryButton: FC<{ category: Category }> = ({ category }) =
       if (response !== undefined && hasErrors(response)) {
         return;
       }      
-      router.replace('/categories');
+      onClick(category.id);
     } catch (error) {
       console.error(error);
     }
   };
 
   return (
-    <button onClick={handleClick}>Delete</button>
+    <Button variant="outlined" color="error" sx={{ marginRight: 2 }} onClick={handleClick}>
+      Видалити
+    </Button>
   );
 };

@@ -40,7 +40,7 @@ export const EditUserNameForm: FC = () => {
   return (
     <form onSubmit={handleSubmit}>
       <div>
-        <label>First name:</label>
+        <label>Ім'я:</label>
         <input
           type="text"
           value={firstName}
@@ -49,7 +49,7 @@ export const EditUserNameForm: FC = () => {
         />
       </div>
       <div>
-        <label>Last name:</label>
+        <label>Прізвище:</label>
         <input
           type="text"
           value={lastName}
@@ -58,7 +58,7 @@ export const EditUserNameForm: FC = () => {
         />
       </div>
       <div>
-        <label>Password:</label>
+        <label>Пароль:</label>
         <input
           type="password"
           value={password}
@@ -67,7 +67,7 @@ export const EditUserNameForm: FC = () => {
         />
       </div>
       {/* {error && <p style={{ color: "red" }}>{error}</p>} */}
-      <button type="submit">Enter</button>
+      <button type="submit">Підтвердити</button>
     </form>
   );
 };

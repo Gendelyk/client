@@ -4,12 +4,12 @@ import { useCurrentUser } from '@modules/user/hooks';
 import { useRouter } from 'next/navigation';
 import React, { FC, useEffect, useState } from 'react'
 
-const ProfileLayout: FC<{ children: React.ReactNode }> = ({ children }) => {
+const CreateCategoryLayout: FC<{ children: React.ReactNode }> = ({ children }) => {
   const router = useRouter();  
   const { user } = useCurrentUser();
 
   useEffect(() => {            
-    if (user && !user.id) {
+    if (user && user.role !== 'user') {
       router.replace('/login');
     }
   }, [router, user]);
@@ -25,4 +25,4 @@ const ProfileLayout: FC<{ children: React.ReactNode }> = ({ children }) => {
   )
 }
 
-export default ProfileLayout;
+export default CreateCategoryLayout;

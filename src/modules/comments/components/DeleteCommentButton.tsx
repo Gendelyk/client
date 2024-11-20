@@ -6,12 +6,14 @@ import { hasErrors } from '@modules/core/utils';
 import { useRouter } from 'next/navigation';
 import { useUpdateComment } from '../hooks';
 import { Comment } from '../types';
+import { Button, IconButton } from '@mui/material';
 
 type Props = {
-  comment: Comment
+  comment: Comment,
+  onClick: (commentId: number) => void
 }
 
-export const DeleteCommentButton: FC<Props> = ({ comment }) => {  
+export const DeleteCommentButton: FC<Props> = ({ comment, onClick }) => {  
   const { updateComment } = useUpdateComment();
 
   const handleClick: MouseEventHandler<HTMLButtonElement> = async (event) => {
@@ -23,12 +25,15 @@ export const DeleteCommentButton: FC<Props> = ({ comment }) => {
       if (response !== undefined && hasErrors(response)) {
         return;
       }      
+      onClick(comment.id);
     } catch (error) {
       console.error(error);
     }
   };
 
   return (
-    <button onClick={handleClick}>Delete</button>
+    <Button variant="outlined" color="error" onClick={handleClick}>
+      Видалити
+    </Button>
   )
 }

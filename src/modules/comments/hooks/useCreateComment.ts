@@ -1,12 +1,12 @@
 import { useMutation } from "@tanstack/react-query"
-import { createComment, CreateCommentParams } from "../api"
+import { createComment, CreateCommentParams, CreateCommentReturnType } from "../api"
 import { useCallback } from "react";
 import { ErrorOutput } from "@modules/core/types/error-output";
 import { hasErrors } from "@modules/core/utils";
 
 type CreateComment = (
   params: CreateCommentParams
-) => Promise<ErrorOutput<CreateCommentParams> | undefined>;
+) => CreateCommentReturnType;
 
 type UseCreateCommentReturnType = {
   isLoading: boolean,
@@ -21,9 +21,7 @@ export const useCreateComment = (): UseCreateCommentReturnType => {
   const handleCreateComment: CreateComment = useCallback(async (data) => {
     const response = await mutateAsync(data);
 
-    if (hasErrors(response)) {
-      return response;
-    }
+    return response;
   }, [mutateAsync]);
 
   return {

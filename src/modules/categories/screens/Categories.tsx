@@ -1,21 +1,39 @@
 'use client';
 
-import React from 'react'
-import { useGetAllCategories } from '../hooks'
+import React, { useEffect, useState } from 'react';
+import { useGetAllCategories } from '../hooks';
+import { Box, Typography, CircularProgress, Card, CardContent, List, ListItem, ListItemText } from '@mui/material';
+import { Category } from '../types';
 import { CategoryListItem } from '../components/CategoryListItem';
+import { Loader } from '@modules/common/components';
 
+// Основной компонент страницы
 export const Categories = () => {
   const { categories } = useGetAllCategories();
-  let list: React.ReactNode[] = [];
+  const [ activeCategories, setActiveCategories ] = useState<Category[]>([]);
 
-  if (categories !== null) {
-    list = categories.filter(cat => cat.status === 'active').map(cat => <CategoryListItem key={cat.id} category={cat}/>);
-  }  
+  useEffect(() => {
+    if (categories === null || !categories.length) {
+      return;
+    }
+    setActiveCategories(categories.filter(cat => cat.status === 'active'));
+  }, [categories]);
+
+  function handleDelete(categoryId: number) {    
+    setActiveCategories(activeCategories.filter(cat => cat.id != categoryId));
+  }
 
   return categories !== null ? (
-    <>    
-      <h1>Categories</h1>
-      <ul>{list}</ul>
-    </>
-  ) : <div>Loading...</div>;
-}
+    <Box sx={{ padding: 4 }}>
+      <Typography variant="h3" gutterBottom>
+        Категорії
+      </Typography>
+      {activeCategories        
+        .map((category) => (
+          <CategoryListItem key={category.id} category={category} handleDelete={handleDelete} />
+        ))}
+    </Box>
+  ) : (
+    <Loader />
+  );
+};

@@ -36,7 +36,7 @@ export const EditCategoryForm: FC<Props> = ({ category }) => {
   return (
     <form onSubmit={handleSubmit}>
       <div>
-        <label>Title:</label>
+        <label>Назва:</label>
         <input
           type="text"
           value={title}
@@ -45,7 +45,7 @@ export const EditCategoryForm: FC<Props> = ({ category }) => {
         />
       </div>
       {/* {error && <p style={{ color: "red" }}>{error}</p>} */}
-      <button type="submit">Enter</button>
+      <button type="submit">Змінити</button>
     </form>
   );
 };

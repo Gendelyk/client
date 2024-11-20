@@ -17,7 +17,7 @@ export const useGetRating = (postId: number): UseGetRatingReturnType => {
     }
   };
   const { data, isLoading } = useQuery({
-    queryKey: ['currentRating'],
+    queryKey: ['currentRating', postId],
     queryFn: () => getRating(params),    
     staleTime: 0
   });

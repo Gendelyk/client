@@ -37,7 +37,7 @@ export const EditUserPassword: FC = () => {
   return (
     <form onSubmit={handleSubmit}>
       <div>
-        <label>Old password:</label>
+        <label>Старий пароль:</label>
         <input
           type="password"
           value={oldPassword}
@@ -46,7 +46,7 @@ export const EditUserPassword: FC = () => {
         />
       </div>
       <div>
-        <label>New password:</label>
+        <label>Новий пароль:</label>
         <input
           type="password"
           value={newPassword}
@@ -55,7 +55,7 @@ export const EditUserPassword: FC = () => {
         />
       </div>
       {/* {error && <p style={{ color: "red" }}>{error}</p>} */}
-      <button type="submit">Enter</button>
+      <button type="submit">Підтвердити</button>
     </form>
   );
 };

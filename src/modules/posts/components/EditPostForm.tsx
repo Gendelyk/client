@@ -55,7 +55,7 @@ export const EditPostForm: FC<Props> = ({ post }) => {
         />
       </div>
       {/* {error && <p style={{ color: "red" }}>{error}</p>} */}
-      <button type="submit">Enter</button>
+      <button type="submit">Змінити</button>
     </form>
   );
 };

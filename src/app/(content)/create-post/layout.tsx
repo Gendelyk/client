@@ -4,7 +4,7 @@ import { useCurrentUser } from '@modules/user/hooks';
 import { useRouter } from 'next/navigation';
 import React, { FC, useEffect, useState } from 'react'
 
-const ProfileLayout: FC<{ children: React.ReactNode }> = ({ children }) => {
+const CreatePostLayout: FC<{ children: React.ReactNode }> = ({ children }) => {
   const router = useRouter();  
   const { user } = useCurrentUser();
 
@@ -25,4 +25,4 @@ const ProfileLayout: FC<{ children: React.ReactNode }> = ({ children }) => {
   )
 }
 
-export default ProfileLayout;
+export default CreatePostLayout;

@@ -16,7 +16,7 @@ export const useGetPost = (id: number): UseGetPostReturnType => {
     }
   };
   const { data, isLoading } = useQuery({
-    queryKey: [`currentPost${id}`],
+    queryKey: [`currentPost`, id],
     queryFn: () => getPost(params),    
     staleTime: 0
   });

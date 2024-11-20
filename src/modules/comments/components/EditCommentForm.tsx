@@ -32,7 +32,7 @@ export const EditCommentForm:FC<Props> = ({ comment }) => {
   return (
     <form onSubmit={handleSubmit}>
       <div>
-        <label>Comment:</label>
+        <label>Коментар:</label>
         <input
           type="text"
           value={body}
@@ -40,7 +40,7 @@ export const EditCommentForm:FC<Props> = ({ comment }) => {
           required
         />
       </div>      
-      <button type="submit">Enter</button>
+      <button type="submit">Змінити</button>
     </form>
   )
 }
