@@ -2,8 +2,7 @@
 
 import { getAllPosts, GetAllPostsParams, GetAllPostsReturnType } from "../api"
 import { useQuery } from "@tanstack/react-query";
-
-type Posts = Extract<GetAllPostsReturnType['data'], { id: number }[]>;
+import { Posts } from "../types/posts";
 
 type UseGetAllPostsReturnType = {
   isLoading: boolean,

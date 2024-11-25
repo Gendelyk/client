@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "generate-types": "cross-var openapi-typescript $npm_config_url --output ./src/modules/core/types/api-types.ts"
+    "generate-types": "cross-var openapi-typescript $npm_config_url --output ./src/modules/core/types/api-types.ts",
+    "generate-recommend-system-types": "cross-var openapi-typescript $npm_config_url --output ./src/modules/core/types/recommend-system-types.ts"
   },
   "dependencies": {
     "@emotion/react": "^11.13.3",

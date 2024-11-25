@@ -9,7 +9,7 @@ const CreateCategoryLayout: FC<{ children: React.ReactNode }> = ({ children }) =
   const { user } = useCurrentUser();
 
   useEffect(() => {            
-    if (user && user.role !== 'user') {
+    if (user && user.role !== 'admin') {
       router.replace('/login');
     }
   }, [router, user]);

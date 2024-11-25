@@ -6,6 +6,8 @@ import { useGetAllPosts } from '../hooks'
 import Link from 'next/link';
 import { List, ListItem, ListItemText, Box, Button, ListItemSecondaryAction } from '@mui/material';
 import { DeletePostButton } from './DeletePostButton';
+import { Posts } from '../types';
+import { SearchPosts } from './SearchPosts';
 
 type Props = {
   categoryId: number
@@ -31,17 +33,22 @@ export const PostList: FC<Props> = ({ categoryId }) => {
 
   useEffect(() => {
     if (posts !== null && posts.length) {
-      const categoryPostsCopy = posts
-        .filter(post => post.categoryId === +categoryId && post.status === 'active')
-        .map((post): Post => ({ id: post.id, title: post.title, body: post.body, author: { firstName: post.author.firstName, lastName: post.author.lastName } }));
-      setCategoryPosts(categoryPostsCopy);
-      if (categoryPostsCopy.length > INITIAL_POST_COUNT) {
-        setDisplayedPosts(posts.slice(0, INITIAL_POST_COUNT));
-      } else {
-        setDisplayedPosts([...categoryPostsCopy]);
-      }
+      initPosts(posts);
     }
   }, [posts]);
+
+  const initPosts = (posts: Posts) => {
+    const categoryPostsCopy = posts
+      .filter(post => post.categoryId === +categoryId && post.status === 'active')
+      .map((post): Post => ({ id: post.id, title: post.title, body: post.body, author: { firstName: post.author.firstName, lastName: post.author.lastName } }));
+    setCategoryPosts(categoryPostsCopy);
+    setPostCount(INITIAL_POST_COUNT);
+    if (categoryPostsCopy.length > INITIAL_POST_COUNT) {
+      setDisplayedPosts(posts.slice(0, INITIAL_POST_COUNT));
+    } else {
+      setDisplayedPosts([...categoryPostsCopy]);
+    }
+  }
 
   const handleDelete = (postId: number) => {
     setDisplayedPosts(displayedPosts.filter(post => post.id != postId));
@@ -58,6 +65,7 @@ export const PostList: FC<Props> = ({ categoryId }) => {
 
   return posts !== null && (
     <>
+      <SearchPosts posts={posts} onClick={initPosts} />
       <List>
         {displayedPosts.map((post) => (
           <ListItem key={post.id} divider>

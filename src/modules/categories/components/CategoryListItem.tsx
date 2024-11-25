@@ -3,6 +3,7 @@ import { Category } from '../types'
 import Link from 'next/link'
 import { Card, CardContent, Typography, List, ListItem, ListItemText, Box } from '@mui/material'
 import { DeleteCategoryButton } from './DeleteCategoryButton'
+import { useCurrentUser } from '@modules/user/hooks'
 
 type Props = {
   category: Category
@@ -10,6 +11,7 @@ type Props = {
 }
 
 export const CategoryListItem: FC<Props> = ({ category, handleDelete }) => {
+  const { user } = useCurrentUser();
   return (
     <Card variant="outlined" sx={{ marginBottom: 2, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
       <Box sx={{ flex: 1 }}>
@@ -21,7 +23,9 @@ export const CategoryListItem: FC<Props> = ({ category, handleDelete }) => {
           </CardContent>
         </Link>
       </Box>
-      <DeleteCategoryButton category={category} onClick={handleDelete}/>
+      {(user !== null && user.role === 'admin') && (
+        <DeleteCategoryButton category={category} onClick={handleDelete}/>
+      )}
     </Card> 
   );
 };

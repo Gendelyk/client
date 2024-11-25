@@ -1,6 +1,5 @@
 "use client";
 
-import { Navbar } from '@modules/common/components/Navbar';
 import './globals.css';
 import { queryClient } from "@modules/core/queryClient";
 import { initAxios } from "@modules/core/utils";

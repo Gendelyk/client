@@ -10,7 +10,8 @@ const Header: FC = () => {
   if (user === null) {    
     return;
   }
-  let isAuth = user.id;
+  const isAuth = user.id;
+  const isAdmin = user.role === 'admin';
 
 
   // useEffect(() => { 
@@ -51,9 +52,11 @@ const Header: FC = () => {
               <Link href="/create-post" passHref>
                 <Button color="inherit">Створити пост</Button>
               </Link>
+              {isAdmin && (
               <Link href="/create-category" passHref>
                 <Button color="inherit">Створити категорію</Button>
               </Link>
+              )}              
             </>
           )}
         </Box>
