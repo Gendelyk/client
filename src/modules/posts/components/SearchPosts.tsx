@@ -31,10 +31,9 @@ export const SearchPosts: React.FC<Props> = ({ posts, onClick }) => {
         maxWidth: 800,
         margin: '0 auto',
       }}
-    >
-      {/* Строка поиска */}
+    >    
       <TextField
-        label="Поиск по названию"
+        label="Пошук за назвою"
         variant="outlined"
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
@@ -43,7 +42,7 @@ export const SearchPosts: React.FC<Props> = ({ posts, onClick }) => {
 
       {/* Кнопка поиска */}
       <Button variant="contained" onClick={handleSearch}>
-        Искать
+        Пошук
       </Button>
     </Box>
   );

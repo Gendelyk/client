@@ -49,13 +49,11 @@ export const RecommendedPosts: React.FC<Props> = ({ userId }) => {
         border: '1px solid #ccc',
         borderRadius: 4,
       }}
-    >
-      {/* Заголовок */}
+    >      
       <Typography variant="h5" gutterBottom>
         Рекомендовані пости
       </Typography>
-
-      {/* Лоадер */}
+      
       {loading ? (
         <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: 4 }}>
           <CircularProgress />
@@ -74,7 +72,7 @@ export const RecommendedPosts: React.FC<Props> = ({ userId }) => {
         </Box>
       ) : (
         <Typography variant="body1" color="text.secondary" sx={{ marginTop: 4 }}>
-          Нет рекомендаций.
+          Немає рекомендацій.
         </Typography>
       )}
     </Box>
